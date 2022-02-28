@@ -11,11 +11,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { LangPipe } from './shared/lang.pipe';
 
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {  TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import ar from '@angular/common/locales/ar';
 
 import en from '@angular/common/locales/en';
 import { registerLocaleData } from '@angular/common';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 registerLocaleData(ar)
 registerLocaleData(en)
 @NgModule({
@@ -34,9 +35,19 @@ registerLocaleData(en)
     HttpClientModule,
     TranslateModule.forRoot({
       defaultLanguage:'en',
+      loader:{
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+
+      }
     })
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function HttpLoaderFactory(_HttpClient:HttpClient){
+  return new TranslateHttpLoader(_HttpClient , './assets/i18n/','.json')
+}
+

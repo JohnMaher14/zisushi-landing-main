@@ -640,6 +640,11 @@ input[type="number"] {
 .widget .social-link ul li a {
   color: #ffffff;
   font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.flag {
+  cursor: pointer;
 }
 
 .widget .social-link ul li a:hover {

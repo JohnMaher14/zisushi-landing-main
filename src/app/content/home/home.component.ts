@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -10,12 +12,26 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class HomeComponent implements OnInit {
   branches: any[] =[]
+  currentLanguage:any;
+  thankyou = false;
   error = '';
+  currentLang: any;
   constructor(private _ApiService:ApiService,
-    private _Router:Router
-    ) { }
+    private _Router:Router,
+    private _Title:Title,
+    public _TranslateService:TranslateService
+    ) {
+      this.currentLang = localStorage.getItem("currentLanguage") || 'en'
+      this._TranslateService.use(this.currentLang)
+    }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
+    this._Title.setTitle("Zi sushi | Mother's day | Home")
+    this._TranslateService.onLangChange.subscribe(
+      () => {
+        this.currentLanguage = this._TranslateService.currentLang
+      }
+    )
     this.showBranches()
   }
   reserveForm = new FormGroup({
@@ -28,6 +44,10 @@ export class HomeComponent implements OnInit {
     'order_id': new FormControl('',Validators.required)
 
   })
+  showcurrentLanguage(language:any){
+    this._TranslateService.use(language);
+    localStorage.setItem("currentLanguage",language)
+    }
   showBranches(){
     this._ApiService.branches().subscribe(
       (response) => {
@@ -36,16 +56,22 @@ export class HomeComponent implements OnInit {
     )
   }
   onSubmit(reserveForm:FormGroup){
-    console.log(reserveForm.value);
     this._ApiService.sendData(reserveForm.value).subscribe(
       (response) => {
         if (response.success) {
-          this._Router.navigate(['/thank-you'])
+          this.thankyou = true
         }else{
-          this.error = response.error
+          if (this.currentLanguage === 'en') {
+            this.error = response.error
+
+          }else if(this.currentLanguage === 'ar'){
+
+            this.error = response.ar_error
+          }
         }
         // console.log(response);
       }
     )
   }
+
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -7,28 +7,31 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent  {
   // title = 'zisushi-landing';
-
-  show:boolean=true
-  currentLang:any
-   constructor(private translateService:TranslateService,
-     private title:Title) { title.setTitle("Zi sushi | Mother's day") }
+  currentLanguage:any
+  show:boolean=true;
+  currentLang:any;
+   constructor(public _TranslateService:TranslateService){
+     this.currentLang = localStorage.getItem("currentLanguage") || 'en'
+     this._TranslateService.use(this.currentLang)
+   }
 
    ngOnInit(): void {
-     this.currentLang =  localStorage.setItem("currenLanguage", "en")
-     this.currentLang = localStorage.getItem("currenLanguage") || "en"
+    this._TranslateService.onLangChange.subscribe(
+      () => {
+        this.currentLanguage = this._TranslateService.currentLang
+      }
+    )
    }
-   saveLanguageToLocalStorage(lang:any) {
-     if(lang.value=='ar') {
-       document.body.classList.add('rtl')
-     } else {
-       document.body.classList.remove('rtl')
-     }
-     this.translateService.setDefaultLang(lang.value)
-     this.translateService.use(lang.value)
-     localStorage.setItem("currenLanguage",lang.value)
-     this.currentLang=lang.value
-     this.show=true
-  }
+   ngDoCheck(): void {
+     //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
+     //Add 'implements DoCheck' to the class.
+
+   }
+
+   showcurrentLanguage(language:any){
+    this._TranslateService.use(language);
+    localStorage.setItem("currentLanguage",language)
+    }
 }

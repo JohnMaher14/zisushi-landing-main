@@ -1,172 +1,159 @@
 
-<div *ngIf="error" class="alert alert-danger" role="alert">
-  <strong>{{error}}</strong>
+<div class="" *ngIf="!thankyou">
+
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    <strong>{{error}}</strong>
+  </div>
+  <form [formGroup]="reserveForm" (ngSubmit)="onSubmit(reserveForm)">
+
+    <div class="form-block mb-0">
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group form-group">
+            <label for="name">{{'form-name' | translate}}</label>
+            <input id="name" [ngClass]="{'border-danger': reserveForm.controls['name'].touched && reserveForm.controls['name'].errors != null}" class="form-control" type="text" formControlName="name" name="name" placeholder="{{'placeholder-name' | translate}}">
+
+            <div class="input-group-append" *ngIf="reserveForm.controls['name'].touched && reserveForm.controls['name'].errors != null">
+              <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['name'].errors['required']" data-toggle="tooltip" title="{{'validation-name' | translate}}">
+                <i class="fas fa-info" aria-hidden="true"></i>
+              </button>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group input-group">
+            <label for="mother_name">{{'form-mother' | translate}}</label>
+            <input type="text" class="form-control" formControlName="mother_name" id="mother_name" placeholder="{{'placeholder-mother' | translate}}" [ngClass]="{'border-danger': reserveForm.controls['mother_name'].touched && reserveForm.controls['mother_name'].errors != null}">
+
+            <div class="input-group-append" *ngIf="reserveForm.controls['mother_name'].touched && reserveForm.controls['mother_name'].errors != null">
+              <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['mother_name'].errors['required']" data-toggle="tooltip" title="{{'validation-mother' | translate}}">
+                <i class="fas fa-info" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group input-group">
+            <label for="phone">{{'form-phone' | translate}}</label>
+            <input id="phone" [ngClass]="{'border-danger': reserveForm.controls['phone'].touched && reserveForm.controls['phone'].errors != null}" min="1" class="form-control" type="number" name="phone" formControlName="phone" placeholder="{{'placeholder-phone' | translate}}">
+
+            <div class="input-group-append" *ngIf="reserveForm.controls['phone'].touched && reserveForm.controls['phone'].errors != null">
+              <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['phone'].errors['required']" data-toggle="tooltip" title="{{'validation-phone-required' | translate}}">
+                <i class="fas fa-info" aria-hidden="true"></i>
+              </button>
+              <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['phone'].errors['pattern']" data-toggle="tooltip" title="{{'validation-phone-min' | translate}}">
+                <i class="fas fa-info" aria-hidden="true"></i>
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group form-group">
+            <label for="email">{{'form-email' | translate}}</label>
+
+            <input type="email" class="form-control" [ngClass]="{'border-danger': reserveForm.controls['email'].touched && reserveForm.controls['email'].errors != null}" id="email" formControlName='email' name="email" placeholder="Example@gmail.com">
+
+            <div class="input-group-append" *ngIf="reserveForm.controls['email'].touched && reserveForm.controls['email'].errors != null">
+              <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['email'].errors['required']" data-toggle="tooltip" title="{{'validation-email-required' | translate}}">
+                <i class="fas fa-info" aria-hidden="true"></i>
+              </button>
+              <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['email'].errors['email'] || reserveForm.controls['email'].errors['pattern']" data-toggle="tooltip" title="{{'validation-email-invalid' | translate}}">
+                <i class="fas fa-info" aria-hidden="true"></i>
+              </button>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group input-group">
+            <label for="address">{{'form-address' | translate}}</label>
+            <input id="address" class="form-control" type="text" name="address" placeholder="{{'placeholder-address' | translate}}" formControlName="address" [ngClass]="{'border-danger': reserveForm.controls['address'].touched && reserveForm.controls['address'].errors != null}">
+
+            <div class="input-group-append" *ngIf="reserveForm.controls['address'].touched && reserveForm.controls['address'].errors != null">
+              <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['address'].errors['required']" data-toggle="tooltip" title="{{'validation-address' | translate}}">
+                <i class="fas fa-info" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group input-group">
+            <label for="order_id">{{'form-order-id' | translate}}</label>
+            <input id="order_id" class="form-control" type="number" name="order_id" placeholder="{{'placeholder-order-id' | translate}}" formControlName="order_id" [ngClass]="{'border-danger': reserveForm.controls['order_id'].touched && reserveForm.controls['order_id'].errors != null}">
+
+            <div class="input-group-append" *ngIf="reserveForm.controls['order_id'].touched && reserveForm.controls['order_id'].errors != null">
+              <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['order_id'].errors['required']" data-toggle="tooltip" title="{{'validation-order-id' | translate}}">
+                <i class="fas fa-info" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+
+          <div class="form-group input-group country-select">
+            <label for="branch">{{'form-branch' | translate}}</label>
+
+                <select formControlName="branch_name" id="branch_name" class="form-control" formControlName="branch_name" [ngClass]="{'border-danger': reserveForm.controls['branch_name'].touched && reserveForm.controls['branch_name'].errors != null}">
+                  <option value="">{{'form-branch-first' | translate}}</option>
+                  <ng-container *ngIf="currentLanguage === 'en'" >
+                    <option value="{{ branch.en_branch_location  }}"
+                    *ngFor="let branch of branches">
+
+                      {{ branch.en_branch_location }}
+                    </option>
+                  </ng-container>
+                  <ng-container *ngIf="currentLanguage === 'ar'" >
+                    <option value="{{ branch.ar_branch_location  }}"
+                    *ngFor="let branch of branches">
+
+                      {{ branch.ar_branch_location }}
+                    </option>
+                  </ng-container>
+                  <!-- <option *ngIf="currentLang === 'ar'" value="{{ branch.en_branch_location  }}" *ngFor="let branch of branches">{{ branch.en_branch_location }}</option> -->
+
+                </select>
+                <div class="input-group-append" *ngIf="reserveForm.controls['branch_name'].touched && reserveForm.controls['branch_name'].errors != null">
+                  <button type="button" class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['branch_name'].errors['required']" data-toggle="tooltip" title="{{'validation-branch' | translate}}">
+                    <i class="fas fa-info" aria-hidden="true"></i>
+                  </button>
+                </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <button type="submit" [disabled]="reserveForm.invalid" class="btn">{{'button' | translate}}</button>
+        </div>
+
+      </div>
+    </div>
+
+  </form>
 </div>
-<form [formGroup]="reserveForm" (ngSubmit)="onSubmit(reserveForm)">
+<div class="jumbotron text-center py-1" *ngIf="thankyou">
+  <div class="row justify-content-center">
+    <div class="col-md-4 text-center">
 
-  <div class="form-block mb-0">
-    <!-- <div class="row">
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label for="fName">Name</label>
-          <input type="text" class="form-control" formControlName="name" id="fName" placeholder="John">
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label for="lName">Mother Name</label>
-          <input type="text" class="form-control" formControlName="mother_name" id="lName" placeholder="Doe">
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label for="inputPhone">Phone Number</label>
-          <input type="text" class="form-control" formControlName="phone" id="inputPhone" placeholder="E.g. 000 0000 0000">
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label for="inputPhone">Email</label>
-          <input type="email" class="form-control" id="inputPhone" formControlName="email">
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label for="address">Address</label>
-          <input type="text" class="form-control" id="address" formControlName="address" >
-        </div>
-      </div>
-      <div class="col-sm-6">
-
-        <div class="form-group country-select">
-          <label for="branch">Branch</label>
-          <div class="select-input choose-country">
-            <span></span>
-              <select id="branch" class="form-control" formControlName="branch">
-                <option value="">Country</option>
-                <option value="">USA</option>
-                <option value="">Russia</option>
-                <option value="">China</option>
-                <option value="">England</option>
-                <option value="">France</option>
-                <option value="">Germany</option>
-                <option value="">Spain</option>
-                <option value="">Netherland</option>
-                <option value="">Singapur</option>
-              </select>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-    <div class="row">
-      <div class="col-md-6">
-        <div class="input-group form-group">
-          <label for="name">YOUR Name</label>
-          <input id="name" [ngClass]="{'border-danger': reserveForm.controls['name'].touched && reserveForm.controls['name'].errors != null}" class="form-control" type="text" formControlName="name" name="name" placeholder="Your name">
-
-          <div class="input-group-append" *ngIf="reserveForm.controls['name'].touched && reserveForm.controls['name'].errors != null">
-            <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['name'].errors['required']" data-toggle="tooltip" title="Name is required">
-              <i class="fas fa-info" aria-hidden="true"></i>
-            </button>
-          </div>
-
-
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group input-group">
-          <label for="mother_name">Mother's Name</label>
-          <input type="text" class="form-control" formControlName="mother_name" id="mother_name" placeholder="Mother's Name" [ngClass]="{'border-danger': reserveForm.controls['mother_name'].touched && reserveForm.controls['mother_name'].errors != null}">
-
-          <div class="input-group-append" *ngIf="reserveForm.controls['mother_name'].touched && reserveForm.controls['mother_name'].errors != null">
-            <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['mother_name'].errors['required']" data-toggle="tooltip" title="Mother name is required">
-              <i class="fas fa-info" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group input-group">
-          <label for="phone">Phone number</label>
-          <input id="phone" [ngClass]="{'border-danger': reserveForm.controls['phone'].touched && reserveForm.controls['phone'].errors != null}" min="1" class="form-control" type="number" name="phone" formControlName="phone" placeholder="Your phone">
-
-          <div class="input-group-append" *ngIf="reserveForm.controls['phone'].touched && reserveForm.controls['phone'].errors != null">
-            <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['phone'].errors['required']" data-toggle="tooltip" title="Phone is required">
-              <i class="fas fa-info" aria-hidden="true"></i>
-            </button>
-            <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['phone'].errors['pattern']" data-toggle="tooltip" title="Phone is minimum 11 digits">
-              <i class="fas fa-info" aria-hidden="true"></i>
-            </button>
-          </div>
-
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="input-group form-group">
-          <label for="email">Email address</label>
-
-          <input type="email" class="form-control" [ngClass]="{'border-danger': reserveForm.controls['email'].touched && reserveForm.controls['email'].errors != null}" id="email" formControlName='email' name="email" placeholder="Example@gmail.com">
-
-          <div class="input-group-append" *ngIf="reserveForm.controls['email'].touched && reserveForm.controls['email'].errors != null">
-            <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['email'].errors['required']" data-toggle="tooltip" title="Email is required">
-              <i class="fas fa-info" aria-hidden="true"></i>
-            </button>
-            <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['email'].errors['email'] || reserveForm.controls['email'].errors['pattern']" data-toggle="tooltip" title="Email is invalid">
-              <i class="fas fa-info" aria-hidden="true"></i>
-            </button>
-
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group input-group">
-          <label for="address">address</label>
-          <input id="address" class="form-control" type="text" name="address" placeholder="Your address" formControlName="address" [ngClass]="{'border-danger': reserveForm.controls['address'].touched && reserveForm.controls['address'].errors != null}">
-
-          <div class="input-group-append" *ngIf="reserveForm.controls['address'].touched && reserveForm.controls['address'].errors != null">
-            <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['address'].errors['required']" data-toggle="tooltip" title="Address is required">
-              <i class="fas fa-info" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="form-group input-group">
-          <label for="order_id">Order id</label>
-          <input id="order_id" class="form-control" type="number" name="order_id" placeholder="Your order id in march" formControlName="order_id" [ngClass]="{'border-danger': reserveForm.controls['order_id'].touched && reserveForm.controls['order_id'].errors != null}">
-
-          <div class="input-group-append" *ngIf="reserveForm.controls['order_id'].touched && reserveForm.controls['order_id'].errors != null">
-            <button type="button"  class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['order_id'].errors['required']" data-toggle="tooltip" title="Order id is required">
-              <i class="fas fa-info" aria-hidden="true"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-
-        <div class="form-group input-group country-select">
-          <label for="branch">Branch</label>
-
-              <select formControlName="branch_name" id="branch_name" class="form-control" formControlName="branch_name" [ngClass]="{'border-danger': reserveForm.controls['branch_name'].touched && reserveForm.controls['branch_name'].errors != null}">
-                <option value="">Choose your branch</option>
-                <option value="{{ branch.en_branch_location }}" *ngFor="let branch of branches">{{ branch.en_branch_location }}</option>
-
-              </select>
-              <div class="input-group-append" *ngIf="reserveForm.controls['branch_name'].touched && reserveForm.controls['branch_name'].errors != null">
-                <button type="button" class="input-group-text" id="basic-addon2" *ngIf="reserveForm.controls['branch_name'].errors['required']" data-toggle="tooltip" title="Branch is required">
-                  <i class="fas fa-info" aria-hidden="true"></i>
-                </button>
-              </div>
-        </div>
-      </div>
-
-      <div class="col-12">
-        <!-- <button class="btn btn-dark" [disabled]="!reserveForm.valid">Submit Message</button> -->
-        <button type="submit" [disabled]="reserveForm.invalid" class="btn">Let's Give Her A Gift!</button>
-      </div>
+        <img src="assets/images/check.png" class="h-150" alt="">
 
     </div>
   </div>
 
-</form>
+  <h1 class="display-3 text-main">{{ 'thankyou-title' | translate }}</h1>
+  <p class="thanks-paragraph">{{ 'thankyou-message' | translate }}</p>
+
+  <div class="row align-items-center">
+    <div class="col-md-6">
+
+      <a class="btn" href="https://zisushi.com/en" role="button">{{'zi-button' | translate}}</a>
+    </div>
+    <div class="col-md-6">
+
+    <a class="btn" routerLink="/home"  role="button">{{'back-button' | translate}}</a>
+  </div>
+  </div>
+
+</div>
